@@ -250,7 +250,7 @@ button:focus {
   border-style: solid;
   border-color: #ffffff;
   font-family: "Source Sans Pro", sans-serif;
-
+  visibility: hidden;
 
 }
 
@@ -502,5 +502,13 @@ button:focus {
 
   100% {
     opacity: 1;
+  }
+}
+
+
+/* CSS code to apply the style only for screens with width greater than 768px */
+@media (min-width: 768px) {
+  .header {
+    visibility: visible;
   }
 }
