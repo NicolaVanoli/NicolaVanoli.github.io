@@ -11,7 +11,7 @@
   height: 50%;
 }
 
-.image {
+.image_project {
   align-items: center;
   opacity: 1;
   display: block;
@@ -56,7 +56,7 @@
     margin-bottom: 20px;
   }
 
-  .image {
+  .image_project {
     display: block;
     margin: 0 auto;
     max-width: 60%;
