@@ -68,3 +68,9 @@
     display: none;
   }
 }
+
+@media (max-width: 1600px) {
+  .overlay {
+      font-size: 14px; /* decrease the font size for smaller screens */
+  }
+}
