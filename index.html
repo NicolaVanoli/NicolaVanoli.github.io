@@ -7,6 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link rel="stylesheet" href="assets/css/main.css" />
 	<link rel="stylesheet" href="assets/css/image.css" />
+	<link rel="stylesheet" href="assets/css/custom-animations.css" />
 	<!-- <link rel="stylesheet" href="assets/css/pointer.css" /> -->
 	<!-- Favicon -->
 	<link rel="shortcut icon" href="favicon.ico">
@@ -41,8 +42,8 @@
 			<div class="logo">
 				<span class="icon fa-angry"></span>
 			</div> -->
-			<div class="content">
-				<p style="font-size: 26px;">welcome to my world</p>
+			<div class="content" data-depth="15">
+				<p style="font-size: 26px;" class="gradient-text">welcome to my world</p>
 				<p id='head1' class='header' style="font-size: 26px; color: #dce0e2; margin-top: 6px;">A.I.</p>
 				<p id='head2' class='header' style="font-size: 26px; color: #dce0e2; margin-top: 6px;">Python</p>
 				<p id='head3' class='header' style="font-size: 26px; color: #dce0e2; margin-top: 6px;">sql</p>
@@ -51,8 +52,8 @@
 			</div>
 			<div class="content">
 				<div class="inner">
-					<h1>Nicola Vanoli</h1>
-					<p>DATA SCIENTIST | DATA ANALYST</p>
+					<h1 class="neon-glow">Nicola Vanoli</h1>
+					<p class="shimmer-text">DATA SCIENTIST | DATA ANALYST</p>
 
 					<!-- <p id='head3' class='header'>For you</p> -->
 					<!-- <a href="https://html5up.net/license">Creative Commons</a>  -->
@@ -65,10 +66,10 @@
 
 				<nav>
 					<ul>
-						<li><a href="#about">About Me</a></li>
+						<li><a href="#about" class="ripple-effect">About Me</a></li>
 
-						<li><a href="#expertise">Expertise</a></li>
-						<li><a href="#contact">Contact</a></li>
+						<li><a href="#expertise" class="ripple-effect">Expertise</a></li>
+						<li><a href="#contact" class="ripple-effect">Contact</a></li>
 					</ul>
 				</nav>
 			</div>
@@ -77,7 +78,7 @@
 				<nav>
 					<ul>
 
-						<li><a href="#dsjoke" id="dsjoke-link">Tell me a data science joke!</a></li>
+						<li><a href="#dsjoke" id="dsjoke-link" class="ripple-effect glitch">Tell me a data science joke!</a></li>
 					</ul>
 				</nav>
 
@@ -89,8 +90,8 @@
 		<div id="main">
 
 			<!-- About -->
-			<article id="about">
-				<h2 class="major">About Me</h2>
+			<article id="about" class="animate-section">
+				<h2 class="major section-title gradient-text">About Me</h2>
 				<span class="image main" style="width: 100%;"><img src="images/profile2.png" alt="" />
 					<figcaption style="text-align: center;">Portrait of <a
 							href="https://www.linkedin.com/in/nicola-vanoli-015957195/" target="_blank">myself</a> following
@@ -201,8 +202,8 @@
 
 
 			<!-- Expertise -->
-			<article id="expertise">
-				<h2 class="major">Expertise</h2>
+			<article id="expertise" class="animate-section">
+				<h2 class="major section-title gradient-text">Expertise</h2>
 				<div class="table-wrapper">
 					<table>
 						<thead>
@@ -348,8 +349,8 @@
 			</article>
 
 			<!-- Contact -->
-			<article id="contact">
-				<h2 class="major">Contact </h2>
+			<article id="contact" class="animate-section">
+				<h2 class="major section-title gradient-text">Contact</h2>
 
 
 				<p>
@@ -644,7 +645,7 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 
 			</article>
 
-			<article id="dsjoke">
+			<article id="dsjoke" class="animate-section">
 				<section>
 
 					<!-- <h4>Blockquote</h4> -->
@@ -654,11 +655,6 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 				</section>
 			</article>
 		</div>
-
-		<!-- Footer -->
-		<footer id="footer">
-			<p class="copyright" style="font-size: 8px;">&copy; Designed by html5up and developed by me</p>
-		</footer>
 
 	</div>
 
@@ -671,6 +667,8 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 	<script src="assets/js/breakpoints.min.js"></script>
 	<script src="assets/js/util.js"></script>
 	<script src="assets/js/main.js"></script>
+	<script src="assets/js/custom-animations.js"></script>
+	<script src="assets/js/advanced-effects.js"></script>
 	<!-- <script src="assets/js/pointer.js"></script> -->
 	<!-- <script>
 		init_pointer({
