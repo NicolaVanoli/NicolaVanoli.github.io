@@ -6,6 +6,17 @@
 (function() {
     'use strict';
 
+    // Mobile/Touch Detection
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+                     ('ontouchstart' in window) || 
+                     (navigator.maxTouchPoints > 0);
+    
+    // Skip heavy animations on mobile
+    if (isMobile) {
+        console.log('Mobile device detected - using lightweight animations');
+        return; // Exit early for mobile devices
+    }
+
     // Custom Cursor
     class CustomCursor {
         constructor() {

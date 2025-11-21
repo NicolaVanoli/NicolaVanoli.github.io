@@ -11,22 +11,33 @@ body:not(.is-article-visible) #wrapper {
     overflow: hidden !important;
 }
 
-/* Hide default cursor */
-body {
-    cursor: none !important;
+/* Hide default cursor on desktop only */
+@media (hover: hover) and (pointer: fine) {
+    body {
+        cursor: none !important;
+    }
+
+    body * {
+        cursor: none !important;
+    }
 }
 
-body * {
-    cursor: none !important;
+/* Custom cursor styles - desktop only */
+@media (hover: hover) and (pointer: fine) {
+    .custom-cursor {
+        position: fixed;
+        pointer-events: none;
+        z-index: 10000;
+        mix-blend-mode: difference;
+        transition: transform 0.1s ease-out;
+    }
 }
 
-/* Custom cursor styles */
-.custom-cursor {
-    position: fixed;
-    pointer-events: none;
-    z-index: 10000;
-    mix-blend-mode: difference;
-    transition: transform 0.1s ease-out;
+/* Hide custom cursor on mobile */
+@media (hover: none) or (pointer: coarse) {
+    .custom-cursor {
+        display: none !important;
+    }
 }
 
 .cursor-dot {
@@ -1281,6 +1292,80 @@ article:not(.active) {
     color: #ffffff !important;
     background: rgba(100, 150, 255, 0.1);
     padding: 8px;
+}
+
+/* ===========================
+   MOBILE OPTIMIZATIONS
+   =========================== */
+
+/* Reduce animations on mobile for better performance */
+@media (hover: none) or (pointer: coarse) or (max-width: 768px) {
+    
+    /* Simplify or disable heavy animations */
+    body::before {
+        animation: gradientShift 30s ease infinite !important; /* Slower */
+    }
+    
+    /* Disable glow effects on mobile */
+    .neon-glow {
+        animation: none !important;
+        text-shadow: 0 0 10px rgba(100, 200, 255, 0.5) !important;
+    }
+    
+    /* Simplify gradient text animation */
+    .gradient-text {
+        background-size: 100% 100% !important;
+        animation: gradientText 10s ease infinite !important;
+    }
+    
+    /* Disable shimmer effect */
+    .shimmer-text::after {
+        display: none;
+    }
+    
+    /* Disable particle trails */
+    .cursor-trail,
+    .sparkle {
+        display: none !important;
+    }
+    
+    /* Simplify button animations */
+    article .button:hover {
+        transform: translateY(-3px) !important;
+    }
+    
+    /* Disable tilt effects */
+    .tilt-effect {
+        transform: none !important;
+    }
+    
+    /* Simplify table animations */
+    tbody tr {
+        animation: none !important;
+        opacity: 1 !important;
+    }
+    
+    /* Simplify timeline animations */
+    .timeline-card {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+    
+    /* Reduce blur effects for performance */
+    article {
+        backdrop-filter: none !important;
+        background: rgba(26, 26, 46, 0.98) !important;
+    }
+    
+    /* Enable scrolling on mobile */
+    body {
+        overflow: auto !important;
+    }
+    
+    body #wrapper {
+        overflow: auto !important;
+    }
 }
 
 .container .overlay {

@@ -3,13 +3,19 @@
  * Special effects for the header/hero section
  */
 
+// Mobile/Touch Detection
+const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+                 ('ontouchstart' in window) || 
+                 (navigator.maxTouchPoints > 0);
+
 // Starfield Background Effect
 class StarfieldEffect {
     constructor() {
         this.canvas = document.createElement('canvas');
         this.ctx = this.canvas.getContext('2d');
         this.stars = [];
-        this.numStars = 200;
+        // Reduce stars on mobile for better performance
+        this.numStars = isMobile ? 50 : 200;
         this.init();
     }
 
@@ -389,14 +395,18 @@ class WaveAnimation {
 
     function initAdvancedEffects() {
         setTimeout(() => {
-            // Uncomment the effects you want to use
-            // Note: Using too many at once might be overwhelming
-            
-            new StarfieldEffect();        // Stars moving toward you
-            // new DNAHelixEffect();      // DNA helix pattern
-            // new MatrixRainEffect();    // Matrix-style falling code
-            new GeometricShapes();        // Floating geometric shapes
-            // new WaveAnimation();       // Wave animation at bottom (DISABLED)
+            if (isMobile) {
+                // Mobile: only use lightweight starfield
+                new StarfieldEffect();
+                console.log('Mobile mode: lightweight effects only');
+            } else {
+                // Desktop: all effects
+                new StarfieldEffect();        // Stars moving toward you
+                // new DNAHelixEffect();      // DNA helix pattern
+                // new MatrixRainEffect();    // Matrix-style falling code
+                new GeometricShapes();        // Floating geometric shapes
+                // new WaveAnimation();       // Wave animation at bottom (DISABLED)
+            }
         }, 200);
     }
 
