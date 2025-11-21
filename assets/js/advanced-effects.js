@@ -396,9 +396,9 @@ class WaveAnimation {
     function initAdvancedEffects() {
         setTimeout(() => {
             if (isMobile) {
-                // Mobile: only use lightweight starfield
-                new StarfieldEffect();
-                console.log('Mobile mode: lightweight effects only');
+                // Mobile: NO effects at all for maximum performance
+                console.log('Mobile device detected - all canvas effects disabled for performance');
+                return; // Exit completely on mobile
             } else {
                 // Desktop: all effects
                 new StarfieldEffect();        // Stars moving toward you

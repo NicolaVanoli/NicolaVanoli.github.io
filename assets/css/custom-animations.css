@@ -2,6 +2,18 @@
    CUSTOM ANIMATIONS FOR HOME PAGE
    =========================== */
 
+/* Override old background images */
+#bg:before,
+#bg:after {
+    background-image: none !important;
+    opacity: 0 !important;
+    display: none !important;
+}
+
+#bg {
+    background: #0a0a0f !important;
+}
+
 /* Disable scrolling on home page */
 body:not(.is-article-visible) {
     overflow: hidden !important;
@@ -1298,73 +1310,126 @@ article:not(.active) {
    MOBILE OPTIMIZATIONS
    =========================== */
 
-/* Reduce animations on mobile for better performance */
+/* Aggressive mobile optimizations - disable ALL heavy effects */
 @media (hover: none) or (pointer: coarse) or (max-width: 768px) {
     
-    /* Simplify or disable heavy animations */
-    body::before {
-        animation: gradientShift 30s ease infinite !important; /* Slower */
-    }
-    
-    /* Disable glow effects on mobile */
-    .neon-glow {
+    /* DISABLE ALL BACKGROUND ANIMATIONS */
+    body::before,
+    body::after {
         animation: none !important;
-        text-shadow: 0 0 10px rgba(100, 200, 255, 0.5) !important;
+        background: #0a0a0f !important;
     }
     
-    /* Simplify gradient text animation */
-    .gradient-text {
-        background-size: 100% 100% !important;
-        animation: gradientText 10s ease infinite !important;
+    /* Hide all canvas elements */
+    canvas {
+        display: none !important;
+    }
+    
+    /* Disable ALL glow effects */
+    .neon-glow,
+    *[class*="glow"] {
+        animation: none !important;
+        text-shadow: none !important;
+    }
+    
+    /* Disable gradient animations completely */
+    .gradient-text,
+    *[class*="gradient"] {
+        background: none !important;
+        color: #64c8ff !important;
+        animation: none !important;
     }
     
     /* Disable shimmer effect */
-    .shimmer-text::after {
+    .shimmer-text,
+    .shimmer-text::after,
+    .shimmer-text::before {
+        animation: none !important;
         display: none;
     }
     
     /* Disable particle trails */
     .cursor-trail,
-    .sparkle {
+    .sparkle,
+    .particle {
         display: none !important;
     }
     
-    /* Simplify button animations */
-    article .button:hover {
-        transform: translateY(-3px) !important;
+    /* Disable ALL hover effects */
+    article .button:hover,
+    nav a:hover,
+    *:hover {
+        transform: none !important;
+        box-shadow: none !important;
     }
     
     /* Disable tilt effects */
-    .tilt-effect {
+    .tilt-effect,
+    *[data-depth] {
         transform: none !important;
     }
     
-    /* Simplify table animations */
-    tbody tr {
-        animation: none !important;
-        opacity: 1 !important;
-    }
-    
-    /* Simplify timeline animations */
-    .timeline-card {
+    /* Disable ALL table animations */
+    tbody tr,
+    table * {
         animation: none !important;
         opacity: 1 !important;
         transform: none !important;
     }
     
-    /* Reduce blur effects for performance */
-    article {
+    /* Disable timeline animations */
+    .timeline-card,
+    *[class*="timeline"] {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+    
+    /* Remove ALL blur effects */
+    article,
+    *[class*="glass"],
+    * {
         backdrop-filter: none !important;
-        background: rgba(26, 26, 46, 0.98) !important;
+        -webkit-backdrop-filter: none !important;
+    }
+    
+    /* Solid backgrounds for performance */
+    article {
+        background: rgba(26, 26, 46, 1) !important;
+    }
+    
+    /* Disable box shadows for performance */
+    * {
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+    
+    /* Disable ALL transitions for instant response */
+    * {
+        transition: none !important;
+        animation: none !important;
     }
     
     /* Enable scrolling on mobile */
-    body {
+    body,
+    body * {
         overflow: auto !important;
     }
     
     body #wrapper {
         overflow: auto !important;
+    }
+    
+    /* Hide decorative light elements */
+    .light,
+    div[class*="light"] {
+        display: none !important;
+    }
+    
+    /* Static header text - no rotation */
+    .header {
+        position: static !important;
+        opacity: 1 !important;
     }
 }
 
