@@ -1,5 +1,5 @@
 // Network-first for same-origin files, cache fallback, so the clock keeps working without signal.
-const CACHE = 'chess-v5';
+const CACHE = 'chess-v7';
 const PRECACHE = ['./', 'index.html', 'clock.html', 'css/style.css', 'css/clock.css', 'js/clock.js', 'js/app.js', 'js/elo.js', 'js/firebase-config.js', 'icon.svg', 'manifest.webmanifest'];
 
 self.addEventListener('install', (e) => {

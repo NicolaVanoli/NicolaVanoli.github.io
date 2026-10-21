@@ -142,6 +142,15 @@ body:not(.is-admin) .admin-only { display: none !important; }
 
 .info summary { cursor: pointer; font-weight: 600; }
 .info p { margin: 10px 0 0; color: var(--muted); font-size: 0.92rem; }
+.info h3 { margin: 18px 0 0; font-size: 0.95rem; }
+.info ul { margin: 8px 0 0; padding-left: 18px; color: var(--muted); font-size: 0.92rem; display: flex; flex-direction: column; gap: 6px; }
+.info .formula {
+  color: var(--text); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.85rem;
+  background: var(--surface-2); padding: 10px 12px; border-radius: 10px; overflow-wrap: anywhere;
+}
+.elo-table { width: 100%; margin-top: 10px; border-collapse: collapse; font-size: 0.88rem; font-variant-numeric: tabular-nums; }
+.elo-table th, .elo-table td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); }
+.elo-table th { color: var(--muted); font-weight: 600; }
 
 /* ---------- Leaderboard ---------- */
 .rank { list-style: none; margin: 8px -8px 0; padding: 0; }

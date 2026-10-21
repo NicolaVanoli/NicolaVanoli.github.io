@@ -4,7 +4,14 @@ import { computeRatings, START_RATING, PROVISIONAL_GAMES } from './elo.js';
 // Games live in a Firestore collection: everyone reads it live, only the admin account can
 // write (enforced by firestore.rules). Writes made offline are queued and synced later.
 const FIREBASE_CDN = 'https://www.gstatic.com/firebasejs/10.12.2';
-const TIME_CONTROLS = ['1+0', '2+1', '3+0', '3+2', '5+0', '5+3', '10+0', '10+5', '15+10', '30+0'];
+const NO_TIME = 'No time';
+// Same presets as the clock.
+const TIME_CONTROLS = [
+  ['Bullet', ['1+0', '1+1', '2+1']],
+  ['Blitz', ['3+0', '3+2', '5+0', '5+3']],
+  ['Rapid', ['10+0', '10+5', '15+10', '25+10']],
+  ['Classica', ['30+0', '30+20', '60+0', '90+30']],
+];
 const RESULTS = ['1-0', '0-1', '1/2'];
 
 const $ = (sel, root = document) => root.querySelector(sel);
@@ -228,8 +235,37 @@ function viewLeaderboard() {
     </section>
     <details class="card info">
       <summary>Come funziona l'Elo</summary>
-      <p>Tutti partono da <b>${START_RATING}</b>. Dopo ogni partita l'Elo si aggiorna in base al risultato atteso: battere chi è più forte vale di più. Il fattore K è 40 per le prime ${PROVISIONAL_GAMES} partite (Elo provvisorio, segnato con <b>?</b>) e 20 dopo.</p>
-      <p>La classifica viene ricalcolata da zero in ordine di data, quindi una partita registrata in ritardo finisce comunque al suo posto.</p>
+      <h3>1. Punto di partenza</h3>
+      <p>Tutti partono da <b>${START_RATING}</b>. L'Elo non è salvato: la classifica viene ricalcolata da zero rigiocando tutte le partite in ordine di data, quindi una partita registrata in ritardo (o eliminata) aggiorna correttamente tutto ciò che viene dopo.</p>
+
+      <h3>2. Il punteggio atteso</h3>
+      <p>Prima di ogni partita si stima quanti punti "dovrebbe" fare ciascuno:</p>
+      <p class="formula">atteso = 1 / (1 + 10<sup>D / 400</sup>)</p>
+      <p>dove <b>D</b> = Elo dell'avversario − il tuo Elo.</p>
+      <table class="elo-table">
+        <thead><tr><th>Differenza di Elo</th><th>Atteso del più forte</th></tr></thead>
+        <tbody><tr><td>0</td><td>0,50</td></tr><tr><td>100</td><td>0,64</td></tr><tr><td>200</td><td>0,76</td></tr><tr><td>400</td><td>0,91</td></tr></tbody>
+      </table>
+
+      <h3>3. Il risultato reale</h3>
+      <p>Vittoria = <b>1</b>, patta = <b>0,5</b>, sconfitta = <b>0</b>.</p>
+
+      <h3>4. La variazione</h3>
+      <p class="formula">variazione = K × (risultato − atteso)</p>
+      <p>arrotondata all'intero. K indica quanto pesa una partita: <b>40</b> per le prime ${PROVISIONAL_GAMES} partite di un giocatore (Elo provvisorio, segnato con <b>?</b>, per arrivare in fretta al livello reale) e <b>20</b> dopo. Il K dipende dalle partite giocate da ciascuno, quindi nella stessa partita i due giocatori possono avere K diversi.</p>
+
+      <h3>Esempi</h3>
+      <ul>
+        <li><b>1200 contro 1200, vince il Bianco.</b> Atteso 0,5 per entrambi: Bianco 40 × (1 − 0,5) = <span class="up">+20</span>, Nero <span class="down">−20</span>.</li>
+        <li><b>1220 contro 1180, patta.</b> Atteso del 1220 ≈ 0,557: 40 × (0,5 − 0,557) ≈ <span class="down">−2</span>, il 1180 fa <span class="up">+2</span>. Pareggiare contro un giocatore più debole fa perdere un po' di Elo.</li>
+        <li><b>1180 batte 1300.</b> Atteso del 1180 ≈ 0,33: 40 × (1 − 0,33) ≈ <span class="up">+27</span>. Battere chi è più forte vale molto di più.</li>
+      </ul>
+
+      <h3>Da sapere</h3>
+      <ul>
+        <li>Con K diversi (o per gli arrotondamenti) i punti guadagnati e persi in una partita possono non essere uguali.</li>
+        <li>È un Elo interno al gruppo: non è confrontabile con quello FIDE o di chess.com.</li>
+      </ul>
     </details>`;
 }
 
@@ -380,8 +416,10 @@ function viewNewGame() {
 
         <div class="row2">
           <label class="field"><span>Tempo</span>
-            <input name="tc" list="tc-list" placeholder="es. 5+3" maxlength="20" />
-            <datalist id="tc-list">${TIME_CONTROLS.map((t) => `<option value="${t}">`).join('')}</datalist>
+            <select name="tc">
+              <option value="${NO_TIME}" selected>${NO_TIME}</option>
+              ${TIME_CONTROLS.map(([group, tcs]) => `<optgroup label="${group}">${tcs.map((t) => `<option value="${t}">${t}</option>`).join('')}</optgroup>`).join('')}
+            </select>
           </label>
           <label class="field"><span>Quando</span><input type="datetime-local" name="playedAt" value="${localDateTimeValue()}" /></label>
         </div>
@@ -418,7 +456,7 @@ function viewNewGame() {
       white,
       black,
       result: form.result.value,
-      timeControl: form.tc.value.trim(),
+      timeControl: form.tc.value,
       playedAt: playedAt.toISOString(),
       note: form.note.value.trim(),
       createdAt: F.serverTimestamp(),
