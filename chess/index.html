@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Club Scacchi Montichiari</title>
+  <meta name="description" content="Classifica Elo, partite e orologio del nostro gruppo di scacchi." />
+  <meta name="theme-color" content="#f6f4ef" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#121311" media="(prefers-color-scheme: dark)" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Scacchi" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="icon.svg" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="#/classifica"><span class="brand-mark" aria-hidden="true">♞</span><span>Club Scacchi Montichiari</span></a>
+  </header>
+
+  <main id="view" tabindex="-1">
+    <div class="center-state"><div class="spinner" aria-label="Caricamento"></div></div>
+  </main>
+
+  <nav class="tabs" id="tabs" aria-label="Sezioni">
+    <a href="#/classifica" data-tab="classifica">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h10v3a5 5 0 0 1-10 0V4Z"/><path d="M7 5H4v1a3 3 0 0 0 3 3M17 5h3v1a3 3 0 0 1-3 3M12 12v4M8 20h8M9.5 16h5l.5 4h-6z"/></svg>
+      <span>Classifica</span>
+    </a>
+    <a href="#/partite" data-tab="partite">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/></svg>
+      <span>Partite</span>
+    </a>
+    <a href="#/nuova" data-tab="nuova" class="tab-cta admin-only">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+      <span>Nuova</span>
+    </a>
+    <a href="clock.html" data-tab="orologio">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M10 2h4M12 2v3"/></svg>
+      <span>Orologio</span>
+    </a>
+    <a href="#/admin" data-tab="admin">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+      <span>Admin</span>
+    </a>
+  </nav>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

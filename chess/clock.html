@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <title>Orologio Scacchi</title>
+  <meta name="description" content="Orologio per scacchi a schermo intero: tocca il tuo lato per passare il turno." />
+  <meta name="theme-color" content="#0e0f0d" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Orologio" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="icon.svg" />
+  <link rel="stylesheet" href="css/clock.css" />
+</head>
+<body>
+  <section id="setup" class="setup">
+    <header class="setup-top">
+      <a href="./" class="back" aria-label="Torna al club">‹ Club</a>
+      <h1>Orologio</h1>
+      <span></span>
+    </header>
+    <p class="setup-note">Ogni telefono è un orologio a sé: apri questa pagina su ogni scacchiera.</p>
+
+    <label class="field">
+      <span>Nome scacchiera <small>(facoltativo)</small></span>
+      <input id="label-input" maxlength="20" placeholder="es. Tavolo 1" autocomplete="off" />
+    </label>
+
+    <div id="presets"></div>
+
+    <details class="custom" id="custom">
+      <summary>Personalizzato</summary>
+      <form id="custom-form" class="custom-form">
+        <div class="row">
+          <label class="field"><span>Minuti</span><input name="min" type="number" inputmode="numeric" min="1" max="300" value="10" /></label>
+          <label class="field"><span>Incremento (s)</span><input name="inc" type="number" inputmode="numeric" min="0" max="120" value="0" /></label>
+        </div>
+        <label class="check"><input type="checkbox" name="handicap" /> <span>Tempi diversi per i due lati (handicap)</span></label>
+        <div class="row" id="handicap-row" hidden>
+          <label class="field"><span>Minuti lato in alto</span><input name="min2" type="number" inputmode="numeric" min="1" max="300" value="5" /></label>
+          <label class="field"><span>Incremento (s)</span><input name="inc2" type="number" inputmode="numeric" min="0" max="120" value="0" /></label>
+        </div>
+        <button class="start">Avvia</button>
+      </form>
+    </details>
+
+    <fieldset class="opts">
+      <label class="check"><input type="checkbox" id="opt-sound" checked /> <span>Suono</span></label>
+      <label class="check"><input type="checkbox" id="opt-vibrate" checked /> <span>Vibrazione</span></label>
+      <label class="check"><input type="checkbox" id="opt-fullscreen" checked /> <span>Schermo intero</span></label>
+    </fieldset>
+  </section>
+
+  <section id="board" class="board" hidden>
+    <button class="side" id="side-0" data-side="0" aria-label="Lato in alto">
+      <span class="face">
+        <span class="tag"></span>
+        <span class="time">0:00</span>
+        <span class="hint"></span>
+        <span class="moves"></span>
+      </span>
+    </button>
+
+    <div class="bar">
+      <button class="bar-btn" id="btn-menu" aria-label="Pausa e menu">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-pause" d="M8 5v14M16 5v14"/><path class="i-menu" d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+      <span class="bar-label" id="bar-label"></span>
+      <button class="bar-btn" id="btn-sound" aria-label="Suono">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4Z"/><path class="i-wave" d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/><path class="i-mute" d="m16 9 6 6m0-6-6 6"/></svg>
+      </button>
+    </div>
+
+    <button class="side" id="side-1" data-side="1" aria-label="Lato in basso">
+      <span class="face">
+        <span class="tag"></span>
+        <span class="time">0:00</span>
+        <span class="hint"></span>
+        <span class="moves"></span>
+      </span>
+    </button>
+
+    <div class="menu" id="menu" hidden>
+      <div class="menu-card" role="dialog" aria-modal="true" aria-labelledby="menu-title">
+        <h2 id="menu-title">Pausa</h2>
+        <p class="menu-sub" id="menu-sub"></p>
+        <button class="m-btn primary" id="m-resume">Riprendi</button>
+        <button class="m-btn" id="m-restart">Ricomincia con lo stesso tempo</button>
+        <button class="m-btn" id="m-change">Cambia tempo</button>
+        <button class="m-btn danger" id="m-quit">Interrompi e torna alla home</button>
+      </div>
+    </div>
+  </section>
+
+  <script src="js/clock.js"></script>
+</body>
+</html>

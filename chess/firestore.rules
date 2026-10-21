@@ -1,0 +1,30 @@
+rules_version = '2';
+
+// Paste into Firebase console → Firestore Database → Rules, then Publish.
+// Everyone can read the games; only the admin account can write them.
+// The email below must match ADMIN_EMAIL in js/firebase-config.js.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isAdmin() {
+      return request.auth != null && request.auth.token.email == 'admin@scacchi.com';
+    }
+
+    function validGame(g) {
+      return g.keys().hasOnly(['white', 'black', 'result', 'timeControl', 'playedAt', 'note', 'createdAt'])
+        && g.white is string && g.white.size() > 0 && g.white.size() <= 30
+        && g.black is string && g.black.size() > 0 && g.black.size() <= 30
+        && g.white.lower() != g.black.lower()
+        && g.result in ['1-0', '0-1', '1/2']
+        && g.playedAt is string
+        && g.timeControl is string && g.timeControl.size() <= 20
+        && g.note is string && g.note.size() <= 140;
+    }
+
+    match /games/{gameId} {
+      allow read: if true;
+      allow create, update: if isAdmin() && validGame(request.resource.data);
+      allow delete: if isAdmin();
+    }
+  }
+}

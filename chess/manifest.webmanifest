@@ -1,0 +1,17 @@
+{
+  "name": "Club Scacchi",
+  "short_name": "Scacchi",
+  "description": "Classifica Elo, partite firmate e orologio del club.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#121311",
+  "theme_color": "#121311",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Orologio", "url": "clock.html" },
+    { "name": "Nuova partita", "url": "./#/nuova" }
+  ]
+}
