@@ -512,3 +512,10 @@ button:focus {
     visibility: visible;
   }
 }
+
+/* No floating lights for visitors who asked the OS to reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  .light {
+    display: none;
+  }
+}

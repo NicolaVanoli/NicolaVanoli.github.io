@@ -403,18 +403,39 @@
 
 
 
-const elements1Link = document.getElementById('dsjoke-link');
 const targetBlockquote = document.getElementById('target-blockquote');
+let jokes = null;
 
-elements1Link.addEventListener('click', () => {
-	fetch('https://raw.githubusercontent.com/NicolaVanoli/xai-research/main/jokes.txt')
-    .then(response => response.text())
-    .then(data => {
-      var jokes = data.split('\n');
-      const randomJoke = jokes[Math.floor(Math.random() * (jokes.length-1))];
-      targetBlockquote.textContent = randomJoke;
-	  targetBlockquote.style.fontSize = '26px';
+function showJoke() {
+	if (!jokes)
+		targetBlockquote.textContent = 'Thinking of a good one...';
 
-    })
-    .catch(error => console.error(error));
-});
+	const loaded = jokes ? Promise.resolve(jokes) : fetch('https://raw.githubusercontent.com/NicolaVanoli/xai-research/main/jokes.txt')
+		.then(response => {
+			if (!response.ok)
+				throw new Error('jokes.txt: HTTP ' + response.status);
+			return response.text();
+		})
+		.then(data => jokes = data.split('\n').filter(line => line.trim() !== ''));
+
+	loaded
+		.then(list => {
+			// Avoid showing the same joke twice in a row.
+			let joke;
+			do {
+				joke = list[Math.floor(Math.random() * list.length)];
+			} while (list.length > 1 && joke === targetBlockquote.textContent);
+			targetBlockquote.textContent = joke;
+		})
+		.catch(error => {
+			console.error(error);
+			targetBlockquote.textContent = 'The jokes are on a coffee break. Try again in a moment.';
+		});
+}
+
+document.getElementById('dsjoke-link').addEventListener('click', showJoke);
+document.getElementById('dsjoke-next').addEventListener('click', showJoke);
+
+// Opening the site directly on #dsjoke should not show an empty quote.
+if (location.hash == '#dsjoke')
+	showJoke();
